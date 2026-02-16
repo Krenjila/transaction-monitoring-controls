@@ -39,3 +39,24 @@ GROUP BY vendor_id, vendor_name, transaction_date
 HAVING COUNT(*) > 1
    AND SUM(amount) > 10000
 ORDER BY total_amount DESC;
+-- Insert Approval Limit Breaches into control_exceptions
+
+INSERT INTO control_exceptions (
+    exception_type,
+    transaction_id,
+    vendor_id,
+    vendor_name,
+    transaction_date,
+    amount,
+    detail
+)
+SELECT
+    'Approval Limit Breach',
+    transaction_id,
+    vendor_id,
+    vendor_name,
+    transaction_date,
+    amount,
+    'Amount exceeds approval limit'
+FROM transactions
+WHERE amount > approval_limit;
