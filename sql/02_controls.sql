@@ -87,3 +87,30 @@ JOIN (
     HAVING COUNT(*) > 1
 ) d
 ON t.vendor_id = d.vendor_id AND t.invoice_id = d.invoice_id;
+-- Insert Potential Split Payments into control_exceptions
+
+INSERT INTO control_exceptions (
+    exception_type,
+    transaction_id,
+    vendor_id,
+    vendor_name,
+    transaction_date,
+    amount,
+    detail
+)
+SELECT
+    'Potential Split Payment',
+    t.transaction_id,
+    t.vendor_id,
+    t.vendor_name,
+    t.transaction_date,
+    t.amount,
+    'Multiple payments same vendor/date; total > 10,000'
+FROM transactions t
+JOIN (
+    SELECT vendor_id, transaction_date
+    FROM transactions
+    GROUP BY vendor_id, transaction_date
+    HAVING COUNT(*) > 1 AND SUM(amount) > 10000
+) s
+ON t.vendor_id = s.vendor_id AND t.transaction_date = s.transaction_date;
