@@ -60,3 +60,30 @@ SELECT
     'Amount exceeds approval limit'
 FROM transactions
 WHERE amount > approval_limit;
+-- Insert Duplicate Invoice Payments into control_exceptions
+
+INSERT INTO control_exceptions (
+    exception_type,
+    transaction_id,
+    vendor_id,
+    vendor_name,
+    transaction_date,
+    amount,
+    detail
+)
+SELECT
+    'Duplicate Invoice Payment',
+    t.transaction_id,
+    t.vendor_id,
+    t.vendor_name,
+    t.transaction_date,
+    t.amount,
+    'Same vendor + same invoice_id appears multiple times'
+FROM transactions t
+JOIN (
+    SELECT vendor_id, invoice_id
+    FROM transactions
+    GROUP BY vendor_id, invoice_id
+    HAVING COUNT(*) > 1
+) d
+ON t.vendor_id = d.vendor_id AND t.invoice_id = d.invoice_id;
