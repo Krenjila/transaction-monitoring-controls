@@ -25,3 +25,17 @@ SELECT
 FROM transactions
 WHERE amount > approval_limit
 ORDER BY amount DESC;
+-- 3. Potential Split Payment Detection
+-- Same vendor + same transaction_date where total exceeds 10,000
+
+SELECT
+    vendor_id,
+    vendor_name,
+    transaction_date,
+    COUNT(*) AS transaction_count,
+    SUM(amount) AS total_amount
+FROM transactions
+GROUP BY vendor_id, vendor_name, transaction_date
+HAVING COUNT(*) > 1
+   AND SUM(amount) > 10000
+ORDER BY total_amount DESC;
