@@ -36,21 +36,51 @@ Additional risk concentration analysis performed at:
 ⸻
 
 Dashboard Insights
+Full Dashboard Insugnt:
+<img src="powerbi/dashboard-overview.png" width="900">
 
 1. Department Risk Exposure
+<img src="powerbi/breach-by-department.png" width="700">
+Story:
+	•	Marketing shows the highest breach percentage (~72%).
+	•	Risk exposure is not evenly distributed across departments.
+	•	Control weakness appears systemic rather than isolated.
 
-(Insert image from powerbi folder)
+Implication:
+Internal audit should prioritize departments with elevated breach rates.
+
 
 2. Control Breaches vs Spend
+<img src="powerbi/controlbreach-totalspent.png" width="700">
+Story:
+	•	Higher spend departments correlate with higher total breach amounts.
+	•	Marketing and Operations drive the majority of financial risk.
+	•	IT shows lower total exposure relative to spend.
 
+Implication:
+High transaction volume increases exposure to control failures.
 
 
 3. Spending vs Approval Threshold
+<img src="powerbi/spending-approval.png" width="700">
+Story:
+	•	Some departments operate closer to their approval limits.
+	•	Large average transaction sizes paired with high approval thresholds increase override risk.
+	•	Outliers indicate potential policy misalignment.
 
+Implication:
+Approval thresholds may need recalibration in certain departments
 
 
 4. Vendor Risk Concentration
+<img src="powerbi/vendor-risk-concentration.png" width="700">
+Story:
+	•	Risk is concentrated among a small group of vendors.
+	•	One vendor shows disproportionately high breach amount relative to spend.
+	•	Vendor-level monitoring reveals exposure invisible at department level.
 
+Implication:
+Risk is vendor-concentrated, not just department-driven.
 
 
 ⸻
