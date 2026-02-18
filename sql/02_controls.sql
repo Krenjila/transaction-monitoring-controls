@@ -1,53 +1,12 @@
--- ================================
--- Transaction Monitoring Controls
--- ================================
-
--- 1) Duplicate Invoice Payment Detection (report)
-SELECT
-    vendor_id,
-    vendor_name,
-    invoice_id,
-    COUNT(*) AS duplicate_count,
-    SUM(amount) AS total_paid
-FROM transactions
-GROUP BY vendor_id, vendor_name, invoice_id
-HAVING COUNT(*) > 1;
-
--- 2) Approval Limit Breach Detection (report)
-SELECT
-    transaction_id,
-    transaction_date,
-    department,
-    vendor_id,
-    vendor_name,
-    amount,
-    approver_id,
-    approval_limit
-FROM transactions
-WHERE amount > approval_limit
-ORDER BY amount DESC;
-
--- 3) Potential Split Payment Detection (report)
-SELECT
-    vendor_id,
-    vendor_name,
-    transaction_date,
-    COUNT(*) AS transaction_count,
-    SUM(amount) AS total_amount
-FROM transactions
-GROUP BY vendor_id, vendor_name, transaction_date
-HAVING COUNT(*) > 1
-   AND SUM(amount) > 10000
-ORDER BY total_amount DESC;
-
--- ================================
--- Insert exceptions into table
--- (safe re-runs handled by DELETE in 00_run_all.sql)
--- ================================
-
--- A) Approval limit breaches
+-- Approval Limit Breaches
 INSERT INTO control_exceptions (
-  exception_type, transaction_id, vendor_id, vendor_name, transaction_date, amount, detail
+  exception_type,
+  transaction_id,
+  vendor_id,
+  vendor_name,
+  transaction_date,
+  amount,
+  detail
 )
 SELECT
   'Approval Limit Breach',
@@ -60,9 +19,15 @@ SELECT
 FROM transactions t
 WHERE t.amount > t.approval_limit;
 
--- B) Duplicate invoice payments (same vendor + same invoice_id appears more than once)
+-- Duplicate Invoice Payments
 INSERT INTO control_exceptions (
-  exception_type, transaction_id, vendor_id, vendor_name, transaction_date, amount, detail
+  exception_type,
+  transaction_id,
+  vendor_id,
+  vendor_name,
+  transaction_date,
+  amount,
+  detail
 )
 SELECT
   'Duplicate Invoice Payment',
@@ -81,9 +46,15 @@ WHERE EXISTS (
     AND x.transaction_id <> t.transaction_id
 );
 
--- C) Potential split payments (same vendor + same day, total > 10,000)
+-- Potential Split Payments
 INSERT INTO control_exceptions (
-  exception_type, transaction_id, vendor_id, vendor_name, transaction_date, amount, detail
+  exception_type,
+  transaction_id,
+  vendor_id,
+  vendor_name,
+  transaction_date,
+  amount,
+  detail
 )
 SELECT
   'Potential Split Payment',
