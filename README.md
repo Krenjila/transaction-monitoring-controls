@@ -1,5 +1,19 @@
 Transaction Monitoring & Internal Controls Framework
 
+Executive Summary
+This project simulates a transaction monitoring and internal controls environment using synthetic financial data (1,213 trasactions).
+Three automated control tests were designed and implemented in SQL:
+	•	Approval limit breaches
+	•	Duplicate invoice payments
+	•	Potential split payments
+
+A total of 214 control exceptions were identified, representing concentrated financial risk across specific departments and vendors.
+
+Power BI dashboards were developed to quantify breach exposure, highlight vendor-level risk concentration, and evaluate control effectiveness relative to spend and approval thresholds.
+
+The analysis demonstrates how continuous transaction-level monitoring strengthens internal controls, surfaces systemic weaknesses, and enables risk-based prioritization for audit and compliance teams.
+
+
 Overview
 
 This project simulates a transaction-level monitoring system designed to detect control failures, approval threshold violations, and vendor concentration risk using SQL, Python, and Power BI.
