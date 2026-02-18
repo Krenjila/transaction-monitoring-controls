@@ -1,4 +1,4 @@
-🛡 Transaction Monitoring & Internal Controls Framework
+Transaction Monitoring & Internal Controls Framework
 
 Overview
 
@@ -33,7 +33,7 @@ Additional risk concentration analysis performed at:
 	•	Department level
 	•	Vendor level
 
-⸻
+
 
 Dashboard Insights
 Full Dashboard Insugnt:
@@ -83,14 +83,14 @@ Implication:
 Risk is vendor-concentrated, not just department-driven.
 
 
-⸻
+
 
 Business Implications
 	•	High breach concentration suggests weak preventive controls
 	•	Vendor-level clustering indicates dependency risk
 	•	Certain departments show threshold proximity patterns
 
-⸻
+
 
 Future Enhancements
 	•	Risk scoring model
