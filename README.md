@@ -1,3 +1,8 @@
+Hi viewer, 
+I built a transaction monitoring system that simulates how internal audit teams detect financial control failures. I generated 1,200 synthetic transactions in Python with three intentional control violations baked in like approval limit breaches, duplicate invoice payments and split payments, which are a fraud red flag. SQL queries detect each violation and flag them as exceptions. Then a Python risk scoring engine I designed prioritizes each exception as High, Medium, or Low based on the transaction amount, vendor country risk, and type of control failure. The final output is an automated Excel audit report that an audit team could open and act on immediately. The whole system is visualized in Power BI
+
+
+----------
 Transaction Monitoring & Internal Controls Framework
 
 Executive Summary
